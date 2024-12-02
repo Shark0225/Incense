@@ -24,6 +24,7 @@ public class MinuteActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_minute);
 
+        // 设置窗口Insets，处理边距问题
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -33,25 +34,28 @@ public class MinuteActivity extends AppCompatActivity {
         // 获取传递的数据
         String text = getIntent().getStringExtra("EXTRA_TEXT");
         int imageResId = getIntent().getIntExtra("EXTRA_IMAGE", R.drawable.default_image);
+        String url = getIntent().getStringExtra("EXTRA_URL"); // 获取传递的 URL
 
-        // 设置图片和文本
+        // 设置文本和图片
         TextView textView = findViewById(R.id.textView);
         textView.setText(text);
 
         ImageView imageView = findViewById(R.id.imageView);
         imageView.setImageResource(imageResId);
 
-        // 处理滚动事件
+        // 处理滚动事件，显示链接按钮
         ScrollView scrollView = findViewById(R.id.scrollView);
-        Button openLinkButton = findViewById(R.id.openLinkButton);
+        Button openLinkButton = findViewById(R.id.openLinkButton); // 获取链接按钮
+        openLinkButton.setVisibility(View.GONE); // 默认不显示链接按钮
 
+        // 滚动监听：滚动到底部时显示链接按钮
         scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
-            if (!scrollView.canScrollVertically(1)) {
-                openLinkButton.setVisibility(View.VISIBLE);
+            if (!scrollView.canScrollVertically(1)) { // 判断是否滚动到最底部
+                openLinkButton.setVisibility(View.VISIBLE); // 显示链接按钮
             }
         });
 
-        // 设置返回主界面
+        // 设置返回主界面的按钮
         ImageButton homeButton = findViewById(R.id.btn_home);
         homeButton.setOnClickListener(v -> {
             Intent intent = new Intent(MinuteActivity.this, MainActivity.class);
@@ -59,12 +63,14 @@ public class MinuteActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 打开链接按钮
-        openLinkButton.setOnClickListener(v -> {
-            String url = "https://www.example.com"; // 替换为实际链接
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            startActivity(intent);
-        });
+        // 如果有 URL，设置点击事件打开链接
+        if (url != null && !url.isEmpty()) {
+            openLinkButton.setOnClickListener(v -> {
+                // 创建 Intent 打开链接
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW);
+                intentUrl.setData(Uri.parse(url)); // 使用传递的 URL
+                startActivity(intentUrl);
+            });
+        }
     }
 }
