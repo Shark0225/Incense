@@ -1,6 +1,8 @@
 package jec.ac.jp.incense;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,12 @@ public class User extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        ImageButton favoriteButton = findViewById(R.id.btn_favorites);
+        favoriteButton.setOnClickListener(v -> {
+            Intent intent = new Intent(User.this, Favorite.class);
+            startActivity(intent);
         });
     }
 }

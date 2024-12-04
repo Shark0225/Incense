@@ -54,6 +54,11 @@ public class MinuteActivity extends AppCompatActivity {
                 openLinkButton.setVisibility(View.VISIBLE); // 显示链接按钮
             }
         });
+        //TODO： 收藏按钮
+        ImageButton favoriteButton = findViewById(R.id.favoriteButton);
+        favoriteButton.setOnClickListener(v -> {
+
+        });
 
         // 设置返回主界面的按钮
         ImageButton homeButton = findViewById(R.id.btn_home);

@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:id="@+id/main"
     android:background="@drawable/background_gradient"
+    android:orientation="vertical"
     android:padding="16dp">
+
+    <ImageButton
+        android:id="@+id/favoriteButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="end|top"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/star" />
 
     <!-- 图片的CardView容器，增加圆角和阴影效果 -->
     <androidx.cardview.widget.CardView
@@ -20,8 +30,8 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitCenter"
             android:padding="8dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/default_image" />
 
     </androidx.cardview.widget.CardView>
@@ -38,9 +48,9 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:gravity="center"
             android:background="@drawable/text_background"
+            android:gravity="center"
+            android:padding="16dp"
             android:text="这里将显示很多很多的文本信息。"
             android:textColor="@android:color/black"
             android:textSize="18sp"
@@ -54,23 +64,6 @@
         android:layout_marginTop="16dp"
         android:text="打开链接"
         android:visibility="gone" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="10dp">
-
-        <ImageButton
-            android:id="@+id/btn_favorites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/favourite"
-            android:contentDescription="收藏"
-            android:layout_centerInParent="true" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bottom_navigation_layout"

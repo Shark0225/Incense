@@ -31,21 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="用户名"
+        android:text="用户名　さん"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/user_bio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:lineSpacingExtra="4dp"
-        android:text="个人简介"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp" />
 
     <!-- 收藏、历史记录、使用感受功能模块 -->
     <LinearLayout
