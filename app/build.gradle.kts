@@ -1,5 +1,7 @@
 plugins {
-    alias(libs.plugins.androidApplication)
+    id("com.android.application")
+    id("com.google.gms.google-services")
+    kotlin("android")
 }
 
 android {
@@ -42,4 +44,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("com.google.firebase:firebase-auth:22.1.1")
+
+
 }

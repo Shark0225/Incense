@@ -13,6 +13,15 @@
         android:theme="@style/Theme.Incense"
         tools:targetApi="31">
         <activity
+            android:name=".NewAccount"
+            android:exported="false" />
+        <activity
+            android:name=".SvLinkSample"
+            android:exported="false" />
+        <activity
+            android:name=".Account"
+            android:exported="false" />
+        <activity
             android:name=".Favorite"
             android:exported="false" />
         <activity

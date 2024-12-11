@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "962741654075",
+    "project_id": "incense-b3edf",
+    "storage_bucket": "incense-b3edf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962741654075:android:3228257d1e9ee28817021e",
+        "android_client_info": {
+          "package_name": "jec.ac.jp.incense"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962741654075-l9d5f4ngo9kkg4btjm36n608ijttmefl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFnSFaJxC3-jQe1niJsBOLux3LOaoFiZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962741654075-l9d5f4ngo9kkg4btjm36n608ijttmefl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
