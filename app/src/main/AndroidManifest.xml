@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,11 +15,15 @@
         android:theme="@style/Theme.Incense"
         tools:targetApi="31">
         <activity
-            android:name=".NewAccount"
+            android:name=".SuccessLogin"
             android:exported="false" />
         <activity
-            android:name=".SvLinkSample"
+            android:name=".EmailLogin"
             android:exported="false" />
+        <activity
+            android:name=".NewAccount"
+            android:exported="false" />
+
         <activity
             android:name=".Account"
             android:exported="false" />
