@@ -42,7 +42,15 @@ public class Account extends AppCompatActivity {
 
         findViewById(R.id.btnGoogleLogin).setOnClickListener(v -> startGoogleSignIn());
     }
+    @Override
 
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Account.this, MainActivity.class);  // 跳转到 MainActivity
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);  // 清除当前栈中的活动
+        startActivity(intent);
+        finish();  // 结束当前 Activity
+    }
     private void setupGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -98,4 +106,5 @@ public class Account extends AppCompatActivity {
             finish();
         }
     }
+
 }

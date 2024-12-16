@@ -48,4 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    public void onBackPressed() {
+        super.onBackPressed();  // 调用系统默认的返回操作
+    }
 }
