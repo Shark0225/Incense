@@ -42,7 +42,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
-
+    implementation ("com.google.firebase:firebase-firestore:24.0.0")
 
     // Google Play Services（必要に応じて）
     implementation("com.google.android.gms:play-services-auth:20.7.0")

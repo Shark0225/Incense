@@ -3,7 +3,10 @@ package jec.ac.jp.incense;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
+import android.view.View;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,8 +33,14 @@ public class Account extends AppCompatActivity {
         setContentView(R.layout.activity_account);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        Button backToMainButton = findViewById(R.id.btn_back);
+        backToMainButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Account.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        });
 
-        // 如果用户已经登录，直接跳转到 User 界面
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
             navigateToUserScreen(currentUser);
@@ -40,16 +49,38 @@ public class Account extends AppCompatActivity {
 
         setupGoogleSignIn();
 
+        Button emailLoginButton = findViewById(R.id.btnEmailLogin);
+        emailLoginButton.setOnClickListener(v -> startEmailLogin());
+
         findViewById(R.id.btnGoogleLogin).setOnClickListener(v -> startGoogleSignIn());
+
+        Button newAccountButton = findViewById(R.id.btnNewAccount);
+        newAccountButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Account.this, NewAccount.class);
+            startActivity(intent);
+        });
     }
+
+    private void startEmailLogin() {
+        Toast.makeText(this, "メールログインが選択されました", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(Account.this, EmailLogin.class);
+        startActivity(intent);
+    }
+
+
+
     @Override
 
+
     public void onBackPressed() {
+
         super.onBackPressed();
-        Intent intent = new Intent(Account.this, MainActivity.class);  // 跳转到 MainActivity
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);  // 清除当前栈中的活动
+
+        Intent intent = new Intent(Account.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
         startActivity(intent);
-        finish();  // 结束当前 Activity
+        finish();
     }
     private void setupGoogleSignIn() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -92,7 +123,7 @@ public class Account extends AppCompatActivity {
                         });
             }
         } catch (ApiException e) {
-            Log.e(TAG, "Google 登录失败", e);
+            Log.e(TAG, "Google 登録できませんでした", e);
             Toast.makeText(this, "Google 登录失败，请重试", Toast.LENGTH_SHORT).show();
         }
     }

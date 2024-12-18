@@ -9,7 +9,7 @@
 
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/edtEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@id/edtPassword" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/edtPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -56,6 +56,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@id/edtEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
