@@ -27,6 +27,7 @@ public class Account extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     private FirebaseAuth firebaseAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +60,23 @@ public class Account extends AppCompatActivity {
             Intent intent = new Intent(Account.this, NewAccount.class);
             startActivity(intent);
         });
+        Button btnForgotPassword = findViewById(R.id.btnPassword);
+        btnForgotPassword.setOnClickListener(v -> {
+            String email = "user@example.com";
+            resetPassword(email);
+        });
+
+
     }
+
 
     private void startEmailLogin() {
         Toast.makeText(this, "メールログインが選択されました", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(Account.this, EmailLogin.class);
         startActivity(intent);
     }
+
+
 
 
 
@@ -102,6 +113,16 @@ public class Account extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
+    }
+    private void resetPassword(String email) {
+        firebaseAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(Account.this, "パスワードリセットのメールが送信されました。", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Account.this, "エラーが発生しました。再試行してください", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
