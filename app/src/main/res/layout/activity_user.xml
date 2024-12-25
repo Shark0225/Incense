@@ -125,11 +125,12 @@
 
 
         <Button
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:id="@+id/btn_logout"
+            app:icon="@drawable/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ログアウト"
-            android:backgroundTint="@color/mtrl_btn_bg_color_selector_blue"
             android:layout_gravity="center" />
 
     </LinearLayout>
