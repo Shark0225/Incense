@@ -10,72 +10,145 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MinuteActivity extends AppCompatActivity {
+
+    private FirebaseFirestore db; // Firestore 實例
+    private boolean isFavorite = false; // 收藏狀態
+    private String userId = "user_12345"; // 假設的用戶 ID
+    private String productId = "product_56789"; // 假設的商品 ID
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_minute);
 
-        // 设置窗口Insets，处理边距问题
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        // 初始化 Firebase Firestore
+        db = FirebaseFirestore.getInstance();
 
-        // 获取传递的数据
+        // 初始化元件
+        ImageButton favoriteButton = findViewById(R.id.favoriteButton);
+        ImageView imageView = findViewById(R.id.imageView);
+        TextView textView = findViewById(R.id.textView);
+        ScrollView scrollView = findViewById(R.id.scrollView);
+        Button openLinkButton = findViewById(R.id.openLinkButton);
+        ImageButton btnHome = findViewById(R.id.btn_home);
+        ImageButton btnApp = findViewById(R.id.btn_app);
+        ImageButton btnUser = findViewById(R.id.btn_user);
+
+        // 獲取傳遞的數據
         String text = getIntent().getStringExtra("EXTRA_TEXT");
         int imageResId = getIntent().getIntExtra("EXTRA_IMAGE", R.drawable.default_image);
-        String url = getIntent().getStringExtra("EXTRA_URL"); // 获取传递的 URL
+        String url = getIntent().getStringExtra("EXTRA_URL");
 
-        // 设置文本和图片
-        TextView textView = findViewById(R.id.textView);
+        // 設置文本和圖片
         textView.setText(text);
-
-        ImageView imageView = findViewById(R.id.imageView);
         imageView.setImageResource(imageResId);
 
-        // 处理滚动事件，显示链接按钮
-        ScrollView scrollView = findViewById(R.id.scrollView);
-        Button openLinkButton = findViewById(R.id.openLinkButton); // 获取链接按钮
-        openLinkButton.setVisibility(View.GONE); // 默认不显示链接按钮
+        // 初始化收藏狀態
+        checkFavoriteStatus(favoriteButton);
 
-        // 滚动监听：滚动到底部时显示链接按钮
+        // 收藏按鈕點擊事件
+        favoriteButton.setOnClickListener(v -> toggleFavoriteStatus(favoriteButton));
+
+        // 滾動事件：滾到底部時顯示按鈕
         scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
-            if (!scrollView.canScrollVertically(1)) { // 判断是否滚动到最底部
-                openLinkButton.setVisibility(View.VISIBLE); // 显示链接按钮
+            if (!scrollView.canScrollVertically(1)) {
+                openLinkButton.setVisibility(View.VISIBLE);
             }
         });
-        //TODO： 收藏按钮
-        ImageButton favoriteButton = findViewById(R.id.favoriteButton);
-        favoriteButton.setOnClickListener(v -> {
 
-        });
-
-        // 设置返回主界面的按钮
-        ImageButton homeButton = findViewById(R.id.btn_home);
-        homeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MinuteActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-        });
-
-        // 如果有 URL，设置点击事件打开链接
+        // 打開鏈接按鈕點擊事件
         if (url != null && !url.isEmpty()) {
             openLinkButton.setOnClickListener(v -> {
-                // 创建 Intent 打开链接
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW);
-                intentUrl.setData(Uri.parse(url)); // 使用传递的 URL
-                startActivity(intentUrl);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
             });
+        }
+
+        // 底部導航按鈕事件
+        btnHome.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
+        btnApp.setOnClickListener(v -> {
+            // App 按鈕功能
+        });
+        btnUser.setOnClickListener(v -> {
+            // User 按鈕功能
+        });
+    }
+
+    /**
+     * 檢查收藏狀態
+     */
+    private void checkFavoriteStatus(ImageButton favoriteButton) {
+        db.collection("favorites")
+                .whereEqualTo("user_id", userId)
+                .whereEqualTo("product_id", productId)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    isFavorite = !queryDocumentSnapshots.isEmpty(); // 如果有結果，說明已收藏
+                    updateFavoriteButton(favoriteButton);
+                });
+    }
+
+    /**
+     * 切換收藏狀態
+     */
+    private void toggleFavoriteStatus(ImageButton favoriteButton) {
+        if (isFavorite) {
+            // 如果已收藏，從 Firestore 中刪除
+            db.collection("favorites")
+                    .whereEqualTo("user_id", userId)
+                    .whereEqualTo("product_id", productId)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            queryDocumentSnapshots.getDocuments().get(0).getReference().delete();
+                        }
+                        isFavorite = false;
+                        updateFavoriteButton(favoriteButton);
+                    });
+        } else {
+            // 如果未收藏，添加到 Firestore
+            db.collection("favorites").add(new Favorite(userId, productId))
+                    .addOnSuccessListener(documentReference -> {
+                        isFavorite = true;
+                        updateFavoriteButton(favoriteButton);
+                    });
+        }
+    }
+
+    /**
+     * 更新收藏按鈕圖標
+     */
+    private void updateFavoriteButton(ImageButton favoriteButton) {
+        if (isFavorite) {
+            favoriteButton.setImageResource(R.drawable.ic_favorite_filled);
+        } else {
+            favoriteButton.setImageResource(R.drawable.ic_favorite_border);
+        }
+    }
+
+    /**
+     * 收藏數據類
+     */
+    public static class Favorite {
+        private String user_id;
+        private String product_id;
+
+        public Favorite(String user_id, String product_id) {
+            this.user_id = user_id;
+            this.product_id = product_id;
+        }
+
+        public String getUser_id() {
+            return user_id;
+        }
+
+        public String getProduct_id() {
+            return product_id;
         }
     }
 }
