@@ -129,13 +129,13 @@ public class Account extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             if (account != null) {
-                Log.d(TAG, "登录成功，账户: " + account.getEmail());
+                Log.d(TAG, "登録成功 " + account.getEmail());
                 AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
                 firebaseAuth.signInWithCredential(credential)
                         .addOnCompleteListener(this, task -> {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                                Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "登録成功", Toast.LENGTH_SHORT).show();
                                 navigateToUserScreen(user);
                             } else {
                                 Log.e(TAG, "Firebase 登录失败", task.getException());
@@ -145,7 +145,7 @@ public class Account extends AppCompatActivity {
             }
         } catch (ApiException e) {
             Log.e(TAG, "Google 登録できませんでした", e);
-            Toast.makeText(this, "Google 登录失败，请重试", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Google 登録失敗もう一度登録してください", Toast.LENGTH_SHORT).show();
         }
     }
 

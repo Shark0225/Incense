@@ -9,7 +9,6 @@
     android:background="@drawable/background_gradient"
     tools:context=".Favorite">
 
-    <!-- 图片视图的CardView容器，增加圆角和阴影效果 -->
 
 
         <TextView
@@ -24,7 +23,6 @@
 
 
 
-    <!-- RecyclerView 用于展示收藏内容 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favoritesRecyclerView"
         android:layout_width="match_parent"

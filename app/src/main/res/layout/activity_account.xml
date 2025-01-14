@@ -9,6 +9,14 @@
     android:background="@drawable/background_gradient"
     tools:context=".Account">
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
